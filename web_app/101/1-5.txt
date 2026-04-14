@@ -1,0 +1,319 @@
+PROGRAM 1: Apply brute force technique to recursively implement the following 
+	a. Linear Search  
+	b. To find the maximum and minimum from a given list of n elements.
+
+	  a. Linear Search  
+import java.util.Scanner;
+
+public class linearrec {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	    Scanner sc = new Scanner(System.in);
+	    System.out.println("Enter size : ");
+	    int n = sc.nextInt();
+	    System.out.println("Enter array elements : ");
+	    int arr[] = new int[10];
+	    for(int i=0;i<n; i++){
+	      arr[i] = sc.nextInt();
+	    }
+	    System.out.println("enter key to be searched : ");
+	    int key = sc.nextInt();
+	    int index = linearsearch(arr, arr.length, key);
+            if (index != -1)
+            	System.out.println("The key element " + key + " is found at position "+ index +  
+                                                        " in the given array.");
+            else
+            	System.out.println("The element " + key + " is not found.");
+    	}
+	
+	static int linearsearch(int arr[], int size, int key)
+    	{
+        	if (size == 0) {
+            		return -1;
+        	}
+        	else if (arr[size - 1] == key) {
+
+            	// Return the index of found key.
+            		return size - 1;
+        	}
+        	return linearsearch(arr, size - 1, key);
+    	}
+}
+
+Output 1:
+Enter size : 
+5
+Enter array elements : 
+1 2 3 4 5
+enter key to be searched : 
+5
+The key element 5 is found at position 4 in the given array.
+
+Output 2:
+Enter size : 
+4
+Enter array elements : 
+1 2 3 4
+enter key to be searched : 
+5
+The element 5 is not found.
+
+
+	b. To find the maximum and minimum from a given list of n elements.
+
+import java.util.Scanner;
+
+public class Findminmax {
+
+		public static void main(String[] args) {
+			int n;
+			int arr[]=new int[20];
+        		System.out.println("Enter the number of elements");
+        		Scanner sc = new Scanner(System.in);
+	    		n = sc.nextInt();
+	    		System.out.println("Enter the array elements");
+        		for(int i=0; i<n; i++)
+        		{
+        			arr[i]=sc.nextInt();
+        		}
+			int max = recursiveMax(arr,n);
+	    		int min=recursiveMin(arr,n);
+	    		System.out.println("Maximum element: " + max);
+	    		System.out.println("Minimum element: " + min);
+		}
+		static int recursiveMax(int[] arr, int n)
+		{
+			if (n == 1)
+	      			return arr[0];
+	    		int max=recursiveMax(arr, n-1);
+	    		return (max>arr[n - 1]? max: arr[n - 1]);
+		}
+	 
+		static int recursiveMin(int[] arr, int n)
+		{
+			if (n == 1)
+	      			return arr[0];
+	    		int min=recursiveMin(arr, n-1);
+	    		return (min< arr[n - 1] ?min: arr[n - 1]);
+	  	}
+}
+
+Output:
+Enter the number of elements
+5
+Enter the array elements
+10 20 30 40 50
+Maximum element: 50
+Minimum element: 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PROGRAM 2: There are 5 books in the shelf. Find the number of ways to select 3 books from 5 books on the shelf using the NCR with recursion.
+
+import java.util.*;
+
+ public class ncr {
+	static int fact(int n){
+	    	if(n==1 || n==0 ){
+	      		return 1;
+	    	}
+	    	return n*fact(n-1);
+	  }
+	  public static void main(String args[]){
+	    	Scanner sc = new Scanner(System.in);
+	    	System.out.println("Enter n: ");
+	    	int n = sc.nextInt();
+	    	System.out.println("Enter r: ");
+	    	int r = sc.nextInt();
+	    	int res = fact(n)/(fact(n-r)*fact(r));
+	    	System.out.println("Result: "+res);
+	  }
+}
+
+
+Output:
+Enter n: 
+5
+Enter r: 
+3
+Result: 10 
+PROGRAM 3: Find the next three terms of the sequence 15, 23, 38, 61, … Fibonacci series of the given number using recursion.
+
+import java.util.*;
+
+public class fibbonacci {
+// Recursive method
+    	static int fibonacci(int n) {
+       		 if (n == 1)
+            		return 15;
+        		if (n == 2)
+            		return 23;
+        		return fibonacci(n - 1) + fibonacci(n - 2);
+    	}
+
+    	public static void main(String[] args) {
+
+        		int n = 7;  // Number of terms to print
+
+        		System.out.println("Fibonacci series upto " + n + " terms:");
+
+        		for (int i = 1; i <= n; i++) {
+            		System.out.print(fibonacci(i) + " ");
+        		}
+    	}
+}
+
+Output:
+Fibonacci series upto 7 terms:
+15 23 38 61 99 160 259 
+MODULE 2
+PROGRAM 4: Implement the Selection Sort algorithm.
+
+import java.util.*;
+public class Selectionsort {
+	    
+		void sort(int arr[]) 
+	    	{ 
+	        		int n = arr.length; 
+	  
+	        		// One by one move boundary of unsorted subarray 
+	        		for (int i = 0; i < n - 1; i++) { 
+	            		// Find the minimum element in unsorted array 
+	            		int min_idx = i; 
+	            		for (int j = i + 1; j < n; j++) { 
+	                			if (arr[j] < arr[min_idx]) 
+	                    				min_idx = j; 
+	            		} 
+	  
+	            		// Swap the found minimum element with the first element	            
+	            		int temp = arr[min_idx]; 
+	            		arr[min_idx] = arr[i]; 
+	            		arr[i] = temp; 
+	        		} 
+	   	 } 
+	      	// Prints the array 
+	    	void printArray(int arr[]) 
+	    	{ 
+	        		int n = arr.length; 
+	        		for (int i = 0; i < n; i++) 
+	            		System.out.print(arr[i] + " "); 
+	       
+	    	} 
+	      	// main function 
+	    	public static void main(String args[]) 
+	    	{ 
+	        		Selectionsort ob = new Selectionsort(); 
+	        		Scanner sc = new Scanner(System.in);
+	        		int arr[] = new int[10];
+		    	System.out.println("Enter size : ");
+		    	int n = sc.nextInt();
+		    	System.out.println("Enter array elements : ");
+		    	for(int i=0;i<n;i++){
+		      		arr[i] = sc.nextInt();
+		    	}
+	        		ob.sort(arr); 
+	        		System.out.println("Sorted array"); 
+	        		ob.printArray(arr); 
+	    	}  
+}
+
+Output:
+Enter size : 
+5
+Enter array elements : 
+5 6 3 4 2
+Sorted array
+2 3 4 5 6 
+PROGRAM 5: Write a program to search for a key in a given set of elements using the Binary search method and find the time complexity required to find the key.
+
+import java.util.*;
+public class BinarysearchDC {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+	    System.out.println("Enter size : ");
+	    int n = sc.nextInt();
+	    System.out.println("Enter sorted array elements : ");
+	    int arr[] = new int[10];
+	    for(int i=0;i<n;i++){
+	      arr[i] = sc.nextInt();
+	    }
+	    System.out.println("enter key to be searched : ");
+	    int key = sc.nextInt();
+	    long startTime = System.nanoTime();
+	    int pos=binarysearch(key,arr,0,n-1);
+	    long endTime = System.nanoTime();
+	    if(pos==-1)
+	    	System.out.println("Key element not found");
+	    else 
+	    	System.out.println("Key element found at position" +pos);
+	    long timeTaken = endTime - startTime;
+        	    System.out.println("Time taken to search the key: " + timeTaken + " nanoseconds");
+	}
+
+	public static int binarysearch( int key,int a[], int low,int  high)
+	{
+		if(low>high) 
+			return -1; //Key item not found
+		int mid=(low + high)/2;
+		if(key==a[mid]) return mid; //Item found at mid position
+		if(key< a[mid]) return binarysearch (key ,a ,low, mid-1);//search in left part
+		return binarysearch (key ,a ,mid+1,high); // search in right part
+	}
+}
+
+
+
+
+
+
+
+Output:
+Enter size : 
+5
+Enter sorted array elements : 
+1 2 3 4 5
+enter key to be searched : 
+4
+Key element found at position 3
+Time taken to search the key: 9800 nanoseconds
+
+

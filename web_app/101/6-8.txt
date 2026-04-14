@@ -1,0 +1,274 @@
+Program 6: Sort a given set of elements using the Merge Sort method and determine the time required to sort the elements. Plot a graph of number of elements versus time taken. Specify the time efficiency class of this algorithm.
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class MergeSort {
+	static final int MAX = 50005;
+	static int[] a = new int[MAX];
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner put = new Scanner(System.in);
+		System.out.print("Enter Max array size: ");
+		int n = put.nextInt();
+		Random random = new Random();
+		System.out.println("Enter the array elements: ");
+		for (int i = 0; i < n; i++)
+		a[i] = random.nextInt(1000); // generate random numbers – uniform 
+		 // distribution
+		System.out.println("Input Array:");
+		for (int i = 0; i < n; i++)
+		System.out.print(a[i] + " ");
+		// set start time
+		long startTime = System.nanoTime();
+		MergeSortAlgorithm(0, n - 1);
+		long stopTime = System.nanoTime();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("\nSorted Array:");
+		for (int i = 0; i < n; i++)
+		System.out.print(a[i] + " ");
+		System.out.println();
+		System.out.println("Time Complexity in ms for n=" + n + " is: " + (double) 
+		 elapsedTime / 1000000);
+	}
+	
+	public static  void MergeSortAlgorithm(int low, int high) 
+	{
+		int mid;
+		if (low < high) 
+		{
+			mid = (low + high) / 2;
+			MergeSortAlgorithm(low, mid);
+			MergeSortAlgorithm(mid + 1, high);
+			Merge(low, mid, high);
+		}
+	}
+
+
+
+	public static void Merge(int low, int mid, int high) 
+	{
+		int[] b = new int[MAX];
+		int i, j;
+		i = low;
+		int k=low;
+		j = mid + 1;
+	
+		while ((i <= mid) && (j <= high))
+		{
+			if (a[i] < a[j])
+			{
+				b[k++] = a[i++];
+			}
+			else
+				b[k++] = a[j++];
+		}
+	
+		while(i<=mid)
+			b[k++] = a[i++];
+		
+		while(j<=high)
+			b[k++] = a[j++];
+	
+		for (k = low; k <= high; k++)
+			a[k] = b[k];
+	}
+
+}
+ 
+Output:
+Enter Max array size: 5
+Enter the array elements: 
+Input Array:
+547 91 907 239 531 
+Sorted Array:
+91 239 531 547 907 
+Time Complexity in ms for n=5 is: 0.384
+
+
+
+	 
+Program 7: Sort a given set of elements using Quick Sort method and determine the time required to sort the elements. Plot a graph of number of elements versus time taken. Specify the time efficiency class of this algorithm.
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class QickSortComplexity {
+
+	static final int MAX = 50005;
+	static int[] a = new int[MAX];
+
+	public static void main(String[] args) {
+			
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter Max array size: ");
+		int n = input.nextInt();
+		Random random = new Random();
+		System.out.println("Enter the array elements: ");
+		for (int i = 0; i < n; i++)
+		a[i] = random.nextInt(1000); // generate random numbers – uniform distribution
+		System.out.println("Input Array:");
+		for (int i = 0; i < n; i++)
+		{
+			System.out.print(a[i] + " ");
+		}
+		long startTime = System.nanoTime(); // set start time
+		QuickSortAlgorithm(0, n - 1);
+		long stopTime = System.nanoTime(); // set stop time
+		long elapsedTime = stopTime - startTime;
+		System.out.println("\nSorted Array:");
+		for (int i = 0; i < n; i++)
+		{
+			System.out.print(a[i] + " ");
+		}
+		System.out.println();
+		System.out.println("Time Complexity in ms for n=" + n + " is: " + (double) 
+		 elapsedTime / 1000000);
+		}
+
+		public static void QuickSortAlgorithm(int L, int H) 
+		{
+			int i, j, temp, pivot;
+			if (L < H) 
+			{
+				i = L;
+				j = H + 1;
+				pivot = a[L]; // mark first element as pivot
+				while (true) 
+				{
+					i++;
+					while (a[i] <=pivot && i<H)
+					{
+							i++;
+					}
+					j--;
+					while (a[j] > pivot)
+					{
+						j--;
+					}
+					if (i < j) 
+					{
+						temp = a[i];
+						a[i] = a[j];
+						a[j] = temp;
+					} 
+					else
+						break; // partition is over
+				}
+				a[L] = a[j];
+				a[j] = pivot;
+				QuickSortAlgorithm(L, j - 1);
+				QuickSortAlgorithm(j + 1, H);
+
+		}
+	}
+}
+
+Output:
+Enter the number of elements to be sorted
+5
+Array elements to be sorted are: 
+6710 
+424 
+2583 
+1244 
+7861 
+
+The sorted elements are: 
+424 
+1244 
+2583 
+6710 
+7861 
+
+The time taken to sort is 5900ns
+
+Program 8: Implement Topological sort using source removal method find the time required to sort the elements.
+
+import java.util.*;
+
+public class Tsort {
+
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		int i,j,k,n;
+		int a[][]=new int[10][10];
+		int indeg[]=new int[10],flag[]=new int[10],count=0;
+
+	//indegree-->Stores indegree of each vertex
+	//flag-->Marks whether a vertex is already included in topological order
+
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Enter the no of vertices:\n");
+		n=sc.nextInt();
+ 
+		System.out.println("Enter the adjacency matrix:\n");
+		for(i=0;i<n;i++){
+			System.out.print("Enter row "+(i+1)+":");
+			for(j=0;j<n;j++)
+				a[i][j]=sc.nextInt();
+		}
+ 
+		for(i=0;i<n;i++){
+			indeg[i]=0; //initially assume no incoming edges.
+			flag[i]=0; //vertex not yet printed.
+		}
+ 
+		//Calculating Indegree of Each Vertex. 
+		//Indegree = number of incoming edges to a vertex.
+		for(i=0;i<n;i++)
+			for(j=0;j<n;j++)
+				indeg[i]=indeg[i]+a[j][i];
+ 
+		System.out.println("\nThe topological order is:");
+		long startTime = System.nanoTime();
+ 		while(count<n)//Loop runs until all vertices are processed.
+		{
+			for(k=0;k<n;k++)
+			{
+				//Find Vertex with Indegree 0 and Such vertex is 				  printed in topological order
+				//indeg[k] == 0 → no incoming edges
+				//flag[k] == 0 → not already printed
+				if((indeg[k]==0) && (flag[k]==0)){
+					System.out.println(" "+(k+1));
+					flag [k]=1;
+		
+ 				//After removing a vertex from the graph,Reduce 				  Indegree of Adjacent Vertices
+				for(i=0;i<n;i++){
+					if(a[k][i]==1)
+						indeg[i]--;
+				}
+			   }
+			}
+ 
+			count++;//Tracks how many iterations occurred
+		}
+		long endTime = System.nanoTime();
+
+        	System.out.println("\nTime taken to sort: " + (endTime - startTime) + 					" nanoseconds");
+	}
+
+}
+
+Output:
+Enter the no of vertices:
+
+5
+Enter the adjacency matrix:
+
+Enter row 1: 0 0 1 0 0
+Enter row 2: 0 0 1 0 0
+Enter row 3: 0 0 0 1 1
+Enter row 4: 0 0 0 0 0
+Enter row 5: 0 0 0 0 0
+
+The topological order is:
+1
+2
+3
+4
+5
+
+

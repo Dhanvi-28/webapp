@@ -1,0 +1,202 @@
+PROGRAM 10: Implement Prim’s algorithm and Find Minimum Cost Spanning Tree of a given connected undirected graph.
+
+import java.util.Scanner;
+
+public class Prims {
+	final static int MAX = 20;
+	static int min; //updated
+	final static int infinity = 9999;
+	static int n; // No. of vertices of G
+	static int a[][]; // Cost matrix
+	static Scanner scan = new Scanner(System.in);
+	public static void main(String[] args) {
+		ReadMatrix();
+		int s = 0; // starting vertex
+		System.out.println("Enter starting vertex: ");
+		s = scan.nextInt();
+		Primsalgorithm(s); 
+	}
+	static void ReadMatrix() 
+	{
+		a = new int[MAX][MAX];
+		System.out.println("Enter the number of vertices:");
+		n = scan.nextInt();
+		System.out.println("Enter the cost adjacency matrix:");
+		for (int i = 1; i <= n; i++)
+			for (int j = 1; j <= n; j++)
+				a[i][j] = scan.nextInt();
+	}
+	static void Primsalgorithm(int s) 
+	{
+		int S[] = new int[MAX];
+		int d[] = new int[MAX];
+		int p[] = new int[MAX]; //updated
+		int t[][]=new int[10][10]; //updated
+		int u, v;
+		int i, k=1, sum=0;
+		for (i = 1; i <= n; i++) 
+		{
+			S[i] = 0;
+			d[i] = a[s][i];
+			p[i]=s;
+		}
+		S[s] = 1; //d[s] = 1;
+		i = 2;
+		while (i <= n) 
+		{
+			u = Extract_Min(S, d);
+			S[u] = 1;
+			t[k][1]=u; //updated
+			t[k][2]=p[u]; //updated
+			sum+=min; //updated
+			k++; //updated
+			i++;
+			for (v = 1; v <= n; v++) 
+			{
+				if ((( a[u][v] < d[v]) && (S[v] == 0)))//updated
+					d[v] =  a[u][v]; //updated
+					p[v]=u;//updated
+			}
+		}
+		//Updated for loop
+		for (i = 1; i <n; i++)
+			System.out.println(t[i][1] + "-->" + t[i][2]);
+			System.out.println("Cost:"+sum);
+	}
+	static int Extract_Min(int S[], int d[]) 
+	{
+		int i, j = 1;
+		min = infinity;
+		for (i = 1; i <= n; i++) 
+		{
+			if ((d[i] <=min) && (S[i] == 0)) 
+			{
+				min = d[i];
+				j = i;
+			}
+		}
+		return j;
+	}
+}
+
+Output:
+Enter the number of vertices:
+6
+Enter the cost adjacency matrix:
+0 60 10 999 999 999
+60 0 999 20 40 70
+10 999 0 999 999 50
+999 20 999 0 999 80
+999 40 999 999 0 30
+999 70 50 80 30 0
+Enter starting vertex: 
+1
+3-->1
+6-->3
+5-->6
+2-->5
+4-->2
+Cost:150 
+PROGRAM 11: Implement Kruskal’s algorithm and Find Minimum Cost Spanning Tree of a given connected undirected graph. 
+import java.util.*;
+class Kruskal 
+{
+	int n;
+	static int find(int v, int p[])
+	{
+		while ( p[v] != v) 
+			v = p[v];
+		return v;
+	}
+	static void union_ij(int i,int j,int p[])
+	{
+		if (i < j)
+			p[j] = i;
+		else
+			p[i] = j;
+	}
+public static void main(String[] args) 
+	{ 
+		//Kruskal k=new Kruskal();
+		int count, i,min, j, u=0, v=0, k,sum;
+		int p[]=new int[10];
+		int t[][]=new int[10][10];
+		int cost[][] = new int[20][20];
+		//int coste[]=new int[10];
+		Scanner sc=new Scanner(System.in);
+		System.out.println("\nEnter the number of nodes");
+		int n=sc.nextInt();
+		System.out.println("\nEnter the cost adjacency matrix \n");
+		for( i=1;i<=n;i++)
+		{
+			for( j=1;j<=n;j++)
+			{
+				cost[i][j]=sc.nextInt();
+			}
+		}
+		
+//k.minspantree(n,cost);
+		count = 1; 
+		k = 1;
+		sum = 0; 
+		
+for(i = 1;i<=n;i++)
+			p[i] = i; 
+		while(count < n)
+		{
+			min=999;
+			for(i=1;i<=n;i++)
+			{
+				for(j=1;j<=n;j++)
+				{
+					if(cost[i][j]!=0 && cost[i][j]<min)
+					{
+						min=cost[i][j];
+						u=i;
+						v=j;
+					}
+				}
+			}
+			if (min == 999) break;
+			i = find (u,p);
+			j = find (v,p);
+			if(i != j)
+			{ 
+				t[k][1] = u;
+				t[k][2] = v;
+				System.out.println("<"+u+","+v+">:"+min);
+				k++;
+				count++;
+				sum += min;
+				union_ij(i, j, p);
+			}
+			cost[u][v] = cost[v][u] = 999;
+		}
+		if(count==n)
+			System.out.println("Cost of spanning tree:"+sum);
+		else
+		System.out.println("The spanning tree does not exist for the given graph\n");
+	}
+}
+
+
+
+
+
+Output:
+Enter the number of nodes
+6
+Enter the cost adjacency matrix 
+0 60 10 999 999 999
+60 0 999 20 40 70
+10 999 0 999 999 50
+999 20 999 0 999 80
+999 40 999 999 0 30
+999 70 50 80 30 0
+<1,3>:10
+<2,4>:20
+<5,6>:30
+<2,5>:40
+<3,6>:50
+Cost of spanning tree:150
+
